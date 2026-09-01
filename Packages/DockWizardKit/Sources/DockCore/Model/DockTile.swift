@@ -54,9 +54,9 @@ public struct DockTile: Codable, Sendable, Equatable, Hashable {
             return label
         }
         switch kind {
-        case .spacer: return "— spacer —"
-        case .smallSpacer: return "— small spacer —"
-        case .flexSpacer: return "— flexible spacer —"
+        case .spacer: return "Spacer"
+        case .smallSpacer: return "Small spacer"
+        case .flexSpacer: return "Flexible spacer"
         case .url: return url ?? "URL"
         case .app, .file, .folder:
             guard let path else { return kind.rawValue }

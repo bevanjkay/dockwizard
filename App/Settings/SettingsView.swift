@@ -45,6 +45,7 @@ struct SettingsView: View {
                             Button("Remove") { cliStatus = CommandLineTool.uninstall() }
                         default:
                             Button("Install…") { cliStatus = CommandLineTool.install() }
+                                .disabled(cliStatus == .unavailable)
                         }
                     }
                 }

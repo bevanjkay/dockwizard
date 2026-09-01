@@ -25,13 +25,15 @@ enum CommandLineTool {
         }
     }
 
-    /// The CLI is copied into the app bundle by `Scripts/package.sh`.
+    /// The CLI is copied into `Contents/Helpers` by `Scripts/package.sh`.
+    ///
+    /// Deliberately not `Contents/MacOS`: APFS is case-insensitive by default, so a probe for
+    /// `Contents/MacOS/dockwizard` matches the app's own `DockWizard` executable, and
+    /// "Install" would link `/usr/local/bin/dockwizard` to the GUI binary.
     static var bundledBinary: URL? {
-        let candidates = [
-            Bundle.main.bundleURL.appendingPathComponent("Contents/Helpers/dockwizard"),
-            Bundle.main.bundleURL.appendingPathComponent("Contents/MacOS/dockwizard"),
-        ]
-        return candidates.first { FileManager.default.isExecutableFile(atPath: $0.path) }
+        let url = Bundle.main.bundleURL.appendingPathComponent("Contents/Helpers/dockwizard")
+        guard FileManager.default.isExecutableFile(atPath: url.path) else { return nil }
+        return url
     }
 
     static func status() -> Status {
