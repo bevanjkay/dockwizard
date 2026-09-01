@@ -12,7 +12,7 @@ enum PreferenceKey {
 }
 
 extension AppStorage where Value == Bool {
-    init(skipMissingAppsPrompt: Void) {
+    init(skipMissingAppsPrompt _: Void) {
         self.init(wrappedValue: false, PreferenceKey.skipMissingAppsPrompt)
     }
 }

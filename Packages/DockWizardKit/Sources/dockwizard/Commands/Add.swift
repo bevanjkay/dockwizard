@@ -32,7 +32,7 @@ struct Add: ParsableCommand {
     var section: DockState.Section?
 
     func validate() throws {
-        let choices = [start, end, position != nil].filter { $0 }.count
+        let choices = [start, end, position != nil].filter(\.self).count
         guard choices <= 1 else {
             throw ValidationError("Use only one of --start, --end and --position.")
         }
@@ -48,13 +48,12 @@ struct Add: ParsableCommand {
         let section = section ?? TileFactory.defaultSection(for: tile)
 
         var tiles = state[section]
-        let index: Int
-        if start {
-            index = 0
+        let index: Int = if start {
+            0
         } else if let position {
-            index = min(position - 1, tiles.count)
+            min(position - 1, tiles.count)
         } else {
-            index = tiles.count
+            tiles.count
         }
         tiles.insert(tile, at: index)
         state[section] = tiles

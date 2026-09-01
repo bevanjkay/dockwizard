@@ -5,8 +5,13 @@ public struct DockBackup: Sendable, Equatable, Identifiable {
     public let url: URL
     public let createdAt: Date
 
-    public var id: URL { url }
-    public var name: String { url.deletingPathExtension().lastPathComponent }
+    public var id: URL {
+        url
+    }
+
+    public var name: String {
+        url.deletingPathExtension().lastPathComponent
+    }
 
     public init(url: URL, createdAt: Date) {
         self.url = url
@@ -101,7 +106,9 @@ public struct DockBackupStore: Sendable {
         }
         var restored: [String: PlistValue] = [:]
         for (key, value) in object {
-            if let converted = PlistValue(propertyList: value) { restored[key] = converted }
+            if let converted = PlistValue(propertyList: value) {
+                restored[key] = converted
+            }
         }
         var changes: [String: PlistValue?] = restored.mapValues { Optional($0) }
         for key in store.allValues().keys where restored[key] == nil {

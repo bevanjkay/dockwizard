@@ -16,7 +16,9 @@ struct TileItem: Identifiable, Hashable {
 }
 
 extension [TileItem] {
-    var tiles: [DockTile] { map(\.tile) }
+    var tiles: [DockTile] {
+        map(\.tile)
+    }
 
     init(_ tiles: [DockTile]) {
         self = tiles.map { TileItem($0) }

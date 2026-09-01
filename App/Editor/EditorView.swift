@@ -111,10 +111,18 @@ struct EditorView: View {
         let removed = diff.sections.reduce(0) { $0 + $1.removed.count }
         let reordered = diff.sections.contains(where: \.reordered)
         var parts: [String] = []
-        if added > 0 { parts.append("\(added) added") }
-        if removed > 0 { parts.append("\(removed) removed") }
-        if reordered { parts.append("reordered") }
-        if !diff.settings.isEmpty { parts.append("\(diff.settings.count) setting(s)") }
+        if added > 0 {
+            parts.append("\(added) added")
+        }
+        if removed > 0 {
+            parts.append("\(removed) removed")
+        }
+        if reordered {
+            parts.append("reordered")
+        }
+        if !diff.settings.isEmpty {
+            parts.append("\(diff.settings.count) setting(s)")
+        }
         return parts.isEmpty ? "Staged changes" : "Staged: " + parts.joined(separator: ", ")
     }
 

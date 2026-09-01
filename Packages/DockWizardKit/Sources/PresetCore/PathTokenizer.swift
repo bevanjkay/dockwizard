@@ -6,7 +6,9 @@ public enum PathTokenizer {
     public static func tokenize(_ path: String, home: String = NSHomeDirectory()) -> String {
         let home = normalized(home)
         guard !home.isEmpty else { return path }
-        if path == home { return "~" }
+        if path == home {
+            return "~"
+        }
         guard path.hasPrefix(home + "/") else { return path }
         return "~" + path.dropFirst(home.count)
     }
@@ -14,7 +16,9 @@ public enum PathTokenizer {
     public static func expand(_ path: String, home: String = NSHomeDirectory()) -> String {
         guard path == "~" || path.hasPrefix("~/") else { return path }
         let home = normalized(home)
-        if path == "~" { return home }
+        if path == "~" {
+            return home
+        }
         return home + path.dropFirst(1)
     }
 

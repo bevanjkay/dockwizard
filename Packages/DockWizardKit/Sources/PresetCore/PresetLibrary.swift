@@ -19,7 +19,9 @@ public struct PresetLibrary: Sendable {
     public struct Entry: Sendable, Equatable, Identifiable {
         public var name: String
         public var url: URL
-        public var id: URL { url }
+        public var id: URL {
+            url
+        }
 
         public init(name: String, url: URL) {
             self.name = name
@@ -46,7 +48,9 @@ public struct PresetLibrary: Sendable {
         if reference.contains("/") || reference.lowercased().hasSuffix(".json") {
             let expanded = (reference as NSString).expandingTildeInPath
             let url = URL(fileURLWithPath: expanded)
-            if FileManager.default.fileExists(atPath: url.path) { return url }
+            if FileManager.default.fileExists(atPath: url.path) {
+                return url
+            }
         }
         let matches = try entries().filter { $0.name == reference }
         switch matches.count {

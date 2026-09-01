@@ -1,0 +1,35 @@
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions: {}
+
+jobs:
+  build-and-test:
+    runs-on: macos-26
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Select Xcode
+        run: |
+          XCODE="$(printf '%s\n' /Applications/Xcode_26*.app | sort -V | tail -1)"
+          echo "Using $XCODE"
+          sudo xcode-select -s "$XCODE"
+      - name: Install tools
+        run: brew install xcodegen swiftlint swiftformat
+      - name: Lint
+        run: make lint
+      - name: Test packages
+        run: make test
+      - name: Integration test against a scratch preferences domain
+        run: Scripts/integration-test.sh
+      - name: Generate project
+        run: make generate
+      - name: Build app
+        run: make build

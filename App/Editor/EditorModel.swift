@@ -46,9 +46,13 @@ final class EditorModel {
         DockState(apps: apps.tiles, others: others.tiles, settings: settings)
     }
 
-    var hasStagedChanges: Bool { stagedState != baseline }
+    var hasStagedChanges: Bool {
+        stagedState != baseline
+    }
 
-    var diff: DockDiff { DockDiff.between(current: baseline, target: stagedState) }
+    var diff: DockDiff {
+        DockDiff.between(current: baseline, target: stagedState)
+    }
 
     subscript(section: DockState.Section) -> [TileItem] {
         get {
@@ -74,7 +78,9 @@ final class EditorModel {
         var result: [DockState.Section: [Int]] = [:]
         for section in DockState.Section.allCases {
             let indices = self[section].indices.filter { selection.contains(self[section][$0].id) }
-            if !indices.isEmpty { result[section] = indices }
+            if !indices.isEmpty {
+                result[section] = indices
+            }
         }
         return result
     }

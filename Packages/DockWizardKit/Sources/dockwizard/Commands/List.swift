@@ -26,7 +26,7 @@ struct List: ParsableCommand {
                 others: state.others.enumerated().map { Item(index: $0.offset + 1, tile: $0.element) },
                 settings: state.settings
             )
-            Output.note(String(decoding: try encoder.encode(payload), as: UTF8.self))
+            try Output.note(json: encoder.encode(payload))
             return
         }
 

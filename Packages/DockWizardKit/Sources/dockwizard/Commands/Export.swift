@@ -46,7 +46,6 @@ struct Export: ParsableCommand {
             Output.note("Wrote \(url.path)")
             return
         }
-        let data = try PresetDocument.encode(preset)
-        Output.note(String(decoding: data, as: UTF8.self))
+        try Output.note(json: PresetDocument.encode(preset))
     }
 }

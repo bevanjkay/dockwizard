@@ -11,7 +11,9 @@ struct LibraryOptions: ParsableArguments {
     )
     var presetsDir: String?
 
-    var library: PresetLibrary { .default(override: presetsDir) }
+    var library: PresetLibrary {
+        .default(override: presetsDir)
+    }
 }
 
 /// Options shared by every command that writes to the Dock.
@@ -52,7 +54,9 @@ enum Session {
         if options.dryRun {
             Output.report(missing: missing)
             Output.note(Output.render(diff))
-            if !missing.isEmpty, !options.quiet { throw CLIExit.missingApps }
+            if !missing.isEmpty, !options.quiet {
+                throw CLIExit.missingApps
+            }
             return
         }
 

@@ -23,22 +23,23 @@ public enum DockSettingsCodec {
     }
 
     /// Only keys present in `settings` are emitted, so a partial preset leaves the rest of
-    /// the Dock untouched.
+    /// the Dock untouched. Assigning `nil` to a dictionary subscript removes the key, so an
+    /// absent setting simply never appears.
     public static func encode(_ settings: DockSettings) -> [String: PlistValue] {
         var values: [String: PlistValue] = [:]
-        if let value = settings.orientation { values[DockKeys.orientation] = .string(value.rawValue) }
-        if let value = settings.tileSize { values[DockKeys.tileSize] = .double(value) }
-        if let value = settings.largeSize { values[DockKeys.largeSize] = .double(value) }
-        if let value = settings.magnification { values[DockKeys.magnification] = .bool(value) }
-        if let value = settings.autohide { values[DockKeys.autohide] = .bool(value) }
-        if let value = settings.autohideDelay { values[DockKeys.autohideDelay] = .double(value) }
-        if let value = settings.autohideTimeModifier { values[DockKeys.autohideTimeModifier] = .double(value) }
-        if let value = settings.minimizeEffect { values[DockKeys.minimizeEffect] = .string(value.rawValue) }
-        if let value = settings.minimizeToApplication { values[DockKeys.minimizeToApplication] = .bool(value) }
-        if let value = settings.showRecents { values[DockKeys.showRecents] = .bool(value) }
-        if let value = settings.showHidden { values[DockKeys.showHidden] = .bool(value) }
-        if let value = settings.staticOnly { values[DockKeys.staticOnly] = .bool(value) }
-        if let value = settings.launchAnimation { values[DockKeys.launchAnimation] = .bool(value) }
+        values[DockKeys.orientation] = settings.orientation.map { .string($0.rawValue) }
+        values[DockKeys.minimizeEffect] = settings.minimizeEffect.map { .string($0.rawValue) }
+        values[DockKeys.tileSize] = settings.tileSize.map(PlistValue.double)
+        values[DockKeys.largeSize] = settings.largeSize.map(PlistValue.double)
+        values[DockKeys.autohideDelay] = settings.autohideDelay.map(PlistValue.double)
+        values[DockKeys.autohideTimeModifier] = settings.autohideTimeModifier.map(PlistValue.double)
+        values[DockKeys.magnification] = settings.magnification.map(PlistValue.bool)
+        values[DockKeys.autohide] = settings.autohide.map(PlistValue.bool)
+        values[DockKeys.minimizeToApplication] = settings.minimizeToApplication.map(PlistValue.bool)
+        values[DockKeys.showRecents] = settings.showRecents.map(PlistValue.bool)
+        values[DockKeys.showHidden] = settings.showHidden.map(PlistValue.bool)
+        values[DockKeys.staticOnly] = settings.staticOnly.map(PlistValue.bool)
+        values[DockKeys.launchAnimation] = settings.launchAnimation.map(PlistValue.bool)
         return values
     }
 }

@@ -103,7 +103,9 @@ public struct PresetResolver: Sendable {
             self.missing = missing
         }
 
-        public var hasMissing: Bool { !missing.isEmpty }
+        public var hasMissing: Bool {
+            !missing.isEmpty
+        }
     }
 }
 

@@ -43,12 +43,18 @@ struct PresetSidebar: View {
             "Delete \(confirmingDeletion?.name ?? "")?",
             isPresented: Binding(
                 get: { confirmingDeletion != nil },
-                set: { if !$0 { confirmingDeletion = nil } }
+                set: {
+                    if !$0 {
+                        confirmingDeletion = nil
+                    }
+                }
             ),
             titleVisibility: .visible
         ) {
             Button("Delete", role: .destructive) {
-                if let entry = confirmingDeletion { editor.deletePreset(entry) }
+                if let entry = confirmingDeletion {
+                    editor.deletePreset(entry)
+                }
                 confirmingDeletion = nil
             }
             Button("Cancel", role: .cancel) { confirmingDeletion = nil }

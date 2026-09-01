@@ -50,9 +50,15 @@ public enum DockTileCodec {
 
     private static func decodeFolderOptions(_ data: PlistValue) -> FolderOptions? {
         var options = FolderOptions()
-        if let raw = data[DockKeys.Tile.showAs]?.intValue { options.showAs = .init(plistValue: raw) }
-        if let raw = data[DockKeys.Tile.displayAs]?.intValue { options.displayAs = .init(plistValue: raw) }
-        if let raw = data[DockKeys.Tile.arrangement]?.intValue { options.arrangement = .init(plistValue: raw) }
+        if let raw = data[DockKeys.Tile.showAs]?.intValue {
+            options.showAs = .init(plistValue: raw)
+        }
+        if let raw = data[DockKeys.Tile.displayAs]?.intValue {
+            options.displayAs = .init(plistValue: raw)
+        }
+        if let raw = data[DockKeys.Tile.arrangement]?.intValue {
+            options.arrangement = .init(plistValue: raw)
+        }
         if let raw = data[DockKeys.Tile.preferredItemSize]?.intValue, raw != FolderOptions.automaticItemSize {
             options.itemSize = raw
         }
@@ -60,7 +66,9 @@ public enum DockTileCodec {
     }
 
     private static func urlString(in value: PlistValue) -> String? {
-        if let nested = value[DockKeys.Tile.urlString]?.stringValue { return nested }
+        if let nested = value[DockKeys.Tile.urlString]?.stringValue {
+            return nested
+        }
         return value.stringValue
     }
 
@@ -113,9 +121,15 @@ public enum DockTileCodec {
     }
 
     private static func encodeFolderOptions(_ folder: FolderOptions, into data: inout [String: PlistValue]) {
-        if let showAs = folder.showAs { data[DockKeys.Tile.showAs] = .int(showAs.plistValue) }
-        if let displayAs = folder.displayAs { data[DockKeys.Tile.displayAs] = .int(displayAs.plistValue) }
-        if let arrangement = folder.arrangement { data[DockKeys.Tile.arrangement] = .int(arrangement.plistValue) }
+        if let showAs = folder.showAs {
+            data[DockKeys.Tile.showAs] = .int(showAs.plistValue)
+        }
+        if let displayAs = folder.displayAs {
+            data[DockKeys.Tile.displayAs] = .int(displayAs.plistValue)
+        }
+        if let arrangement = folder.arrangement {
+            data[DockKeys.Tile.arrangement] = .int(arrangement.plistValue)
+        }
         data[DockKeys.Tile.preferredItemSize] = .int(folder.itemSize ?? FolderOptions.automaticItemSize)
     }
 }

@@ -50,7 +50,9 @@ public struct DockTile: Codable, Sendable, Equatable, Hashable {
 
     /// A short human description used in diffs and CLI listings.
     public var displayName: String {
-        if let label, !label.isEmpty { return label }
+        if let label, !label.isEmpty {
+            return label
+        }
         switch kind {
         case .spacer: return "— spacer —"
         case .smallSpacer: return "— small spacer —"

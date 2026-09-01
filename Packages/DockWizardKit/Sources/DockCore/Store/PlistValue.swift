@@ -64,9 +64,6 @@ public indirect enum PlistValue: Sendable, Equatable, Hashable {
 
 public extension PlistValue {
     /// Bridges a `CFPropertyList` value into the `Sendable` representation.
-    ///
-    /// `NSNumber` cannot distinguish a stored boolean from `0`/`1` by type alone, so the
-    /// underlying CFNumber type is inspected — the Dock stores several genuine booleans.
     init?(propertyList object: Any) {
         switch object {
         case let value as String:
@@ -76,24 +73,29 @@ public extension PlistValue {
         case let value as Date:
             self = .date(value)
         case let value as NSNumber:
-            if CFGetTypeID(value) == CFBooleanGetTypeID() {
-                self = .bool(value.boolValue)
-            } else if CFNumberIsFloatType(value) {
-                self = .double(value.doubleValue)
-            } else {
-                self = .int(value.intValue)
-            }
+            self = Self.number(value)
         case let value as [Any]:
             self = .array(value.compactMap { PlistValue(propertyList: $0) })
         case let value as [String: Any]:
             var result: [String: PlistValue] = [:]
             for (key, element) in value {
-                if let converted = PlistValue(propertyList: element) { result[key] = converted }
+                if let converted = PlistValue(propertyList: element) {
+                    result[key] = converted
+                }
             }
             self = .dictionary(result)
         default:
             return nil
         }
+    }
+
+    /// `NSNumber` cannot distinguish a stored boolean from `0`/`1` by type alone, so the
+    /// underlying CFNumber type decides.
+    private static func number(_ value: NSNumber) -> PlistValue {
+        if CFGetTypeID(value) == CFBooleanGetTypeID() {
+            return .bool(value.boolValue)
+        }
+        return CFNumberIsFloatType(value) ? .double(value.doubleValue) : .int(value.intValue)
     }
 
     /// The `CFPropertyList`-compatible object for this value.

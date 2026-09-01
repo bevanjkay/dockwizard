@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DockWizard — presets for your macOS Dock</title>
+  <meta name="description" content="DockWizard is a free, open-source macOS Dock manager. Save your Dock as a portable JSON preset, edit it in bulk, and apply it from the GUI or the command line.">
+  <meta property="og:title" content="DockWizard">
+  <meta property="og:description" content="Save your Dock as a preset. Move it between Macs. Edit it in bulk.">
+  <meta property="og:url" content="https://bevanjkay.github.io/dockwizard/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <h1>DockWizard</h1>
+      <p class="tagline">Save your Dock as a preset. Move it between Macs. Edit it in bulk.</p>
+      <div class="cta">
+        <a class="button primary" id="download" href="https://github.com/bevanjkay/dockwizard/releases/latest">Download for macOS</a>
+        <a class="button" href="https://github.com/bevanjkay/dockwizard">View on GitHub</a>
+      </div>
+      <p class="meta"><span id="version">Latest release</span> · Requires macOS 26 · Signed &amp; notarised · MIT licensed</p>
+    </header>
+
+    <section class="demo" aria-label="Preset preview">
+      <div class="terminal">
+        <div class="terminal-bar"><span></span><span></span><span></span></div>
+        <pre><code><span class="prompt">$</span> dockwizard export --save work
+Saved work.json
+
+<span class="prompt">$</span> dockwizard apply work --dry-run
+apps:
+  <span class="minus">- Adobe Photoshop 2026</span>
+  <span class="plus">+ Linear</span>
+  <span class="tilde">~ order changes</span>
+settings:
+  <span class="tilde">~ tilesize: 48 -&gt; 64</span></code></pre>
+      </div>
+    </section>
+
+    <section class="features">
+      <div>
+        <h2>Presets that travel</h2>
+        <p>Apps are matched by bundle identifier with a verified path, and <code>$HOME</code> becomes <code>~</code>, so a preset from your work Mac still finds <code>~/Downloads</code> on your laptop. Anything not installed is reported, never silently dropped.</p>
+      </div>
+      <div>
+        <h2>Bulk editing</h2>
+        <p>Multi-select, drag a whole block to reorder, wrap a run of apps in spacers, or extract a selection into a new preset. Nothing touches the Dock until you press Apply.</p>
+      </div>
+      <div>
+        <h2>Scriptable</h2>
+        <p>The app bundles a <code>dockwizard</code> CLI with real exit codes — <code>2</code> means applied with items skipped — so a new-Mac setup script can set up your Dock and tell you what was missing.</p>
+      </div>
+      <div>
+        <h2>Always reversible</h2>
+        <p>Every apply snapshots the entire Dock preference domain first. <code>dockwizard restore</code> puts it back, including keys DockWizard doesn't even model.</p>
+      </div>
+    </section>
+
+    <section class="install">
+      <h2>Install</h2>
+      <pre><code>brew install --cask bevanjkay/tap/dockwizard</code></pre>
+      <p>or download the DMG above and drag DockWizard to Applications. To use the command line tool, open <strong>Settings → Command Line Tool → Install</strong>.</p>
+      <p class="fineprint">DockWizard isn't on the Mac App Store and can't be: a sandboxed app is not allowed to write another application's preferences, which is the entire job.</p>
+    </section>
+
+    <footer>
+      <p>Made by <a href="https://bevankay.me">Bevan Kay</a> · <a href="https://github.com/bevanjkay/dockwizard/issues">Report an issue</a> · <a href="https://github.com/bevanjkay/dockwizard/releases">All releases</a></p>
+    </footer>
+  </main>
+  <script>
+    fetch("https://api.github.com/repos/bevanjkay/dockwizard/releases?per_page=5")
+      .then(r => r.ok ? r.json() : [])
+      .then(releases => {
+        const release = releases.find(r => !r.draft);
+        if (!release) return;
+        const dmg = release.assets.find(a => a.name.endsWith(".dmg"));
+        if (dmg) document.getElementById("download").href = dmg.browser_download_url;
+        document.getElementById("version").textContent = release.tag_name.replace(/^v/, "") + (release.prerelease ? " (pre-release)" : "");
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

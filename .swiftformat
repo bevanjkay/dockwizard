@@ -3,4 +3,4 @@
 --maxwidth 120
 --wraparguments before-first
 --wrapparameters before-first
---exclude DockWizard.xcodeproj,.build,Scripts
+--exclude DockWizard.xcodeproj,.build,build,dist,Scripts

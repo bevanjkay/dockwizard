@@ -43,7 +43,15 @@ public struct Preset: Codable, Sendable, Equatable {
     }
 
     /// Keys understood at the top level of a preset document.
-    static let knownKeys: Set<String> = ["schemaVersion", "generator", "name", "description", "apps", "others", "settings"]
+    static let knownKeys: Set<String> = [
+        "schemaVersion",
+        "generator",
+        "name",
+        "description",
+        "apps",
+        "others",
+        "settings",
+    ]
 }
 
 public extension Preset {

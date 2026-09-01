@@ -14,7 +14,9 @@ public struct CFPreferencesStore: PreferencesStore {
 
     public static let dock = CFPreferencesStore(domain: DockKeys.domain)
 
-    private var applicationID: CFString { domain as CFString }
+    private var applicationID: CFString {
+        domain as CFString
+    }
 
     public func value(forKey key: String) -> PlistValue? {
         guard let object = CFPreferencesCopyAppValue(key as CFString, applicationID) else { return nil }
@@ -29,7 +31,9 @@ public struct CFPreferencesStore: PreferencesStore {
         ) as? [String] ?? []
         var result: [String: PlistValue] = [:]
         for key in keys {
-            if let value = value(forKey: key) { result[key] = value }
+            if let value = value(forKey: key) {
+                result[key] = value
+            }
         }
         return result
     }

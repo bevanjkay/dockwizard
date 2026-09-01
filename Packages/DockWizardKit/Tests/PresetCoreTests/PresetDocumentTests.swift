@@ -4,7 +4,13 @@ import PresetCore
 import Testing
 
 struct PresetDocumentTests {
-    private func data(_ json: String) -> Data { Data(json.utf8) }
+    private func data(_ json: String) -> Data {
+        Data(json.utf8)
+    }
+
+    private func text(_ data: Data) -> String {
+        String(bytes: data, encoding: .utf8) ?? ""
+    }
 
     @Test func readsAMinimalPreset() throws {
         let result = try PresetDocument.load(data: data("""
@@ -82,7 +88,7 @@ struct PresetDocumentTests {
             includeSettings: false
         )
         #expect(preset.settings == nil)
-        let json = String(decoding: try PresetDocument.encode(preset), as: UTF8.self)
+        let json = try text(PresetDocument.encode(preset))
         #expect(!json.contains("settings"))
     }
 
@@ -92,7 +98,7 @@ struct PresetDocumentTests {
             summary: "Dev and comms",
             apps: [.app(path: "/Applications/Slack.app", label: "Slack", bundleID: "com.tinyspeck.slackmacgap")]
         )
-        let json = String(decoding: try PresetDocument.encode(preset), as: UTF8.self)
+        let json = try text(PresetDocument.encode(preset))
         #expect(json.contains("\"description\""))
         #expect(json.contains("\"bundleId\""))
         #expect(json.contains("\"type\" : \"app\""))

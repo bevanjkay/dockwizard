@@ -14,7 +14,9 @@ struct Diff: ParsableCommand {
 
     func run() throws {
         let loaded = try libraryOptions.library.load(preset)
-        for warning in loaded.warnings { Output.warning(warning) }
+        for warning in loaded.warnings {
+            Output.warning(warning)
+        }
         let resolution = PresetResolver().resolve(loaded.preset)
         Output.report(missing: resolution.missing)
         let diff = DockDiff.between(
@@ -22,6 +24,8 @@ struct Diff: ParsableCommand {
             target: resolution.state
         )
         Output.note(Output.render(diff))
-        if !resolution.missing.isEmpty { throw CLIExit.missingApps }
+        if !resolution.missing.isEmpty {
+            throw CLIExit.missingApps
+        }
     }
 }

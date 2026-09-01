@@ -11,7 +11,7 @@ struct PresetResolverTests {
         PresetResolver(locator: locator, home: "/Users/bob")
     }
 
-    @Test func usesTheRecordedPathWhenTheBundleIdentifierMatches() throws {
+    @Test func usesTheRecordedPathWhenTheBundleIdentifierMatches() {
         let outcome = resolver(StubApplicationLocator(bundleIDsByPath: [slackPath: slackID]))
             .resolve(.app(path: slackPath, label: "Slack", bundleID: slackID))
         #expect(outcome == .success(.app(path: slackPath, label: "Slack", bundleID: slackID)))
@@ -19,7 +19,7 @@ struct PresetResolverTests {
 
     /// A stale copy on a mounted disk image is exactly what the verification step exists to
     /// avoid, so a mismatch must fall through to LaunchServices rather than trusting the path.
-    @Test func fallsBackToLaunchServicesWhenTheBundleIdentifierDiffers() throws {
+    @Test func fallsBackToLaunchServicesWhenTheBundleIdentifierDiffers() {
         let locator = StubApplicationLocator(
             installedByBundleID: [slackID: slackPath],
             bundleIDsByPath: ["/Volumes/Slack/Slack.app": "com.example.impostor", slackPath: slackID]
@@ -33,7 +33,7 @@ struct PresetResolverTests {
         #expect(tile.path == slackPath)
     }
 
-    @Test func findsAnAppThatMovedSinceTheExport() throws {
+    @Test func findsAnAppThatMovedSinceTheExport() {
         let locator = StubApplicationLocator(installedByBundleID: [slackID: "/Users/bob/Applications/Slack.app"])
         let outcome = resolver(locator).resolve(.app(path: slackPath, label: "Slack", bundleID: slackID))
         guard case let .success(tile) = outcome else {
@@ -61,7 +61,7 @@ struct PresetResolverTests {
         #expect(outcome == .success(DockTile(kind: .app, path: slackPath, label: "Slack")))
     }
 
-    @Test func expandsHomeRelativeFolderTilesForThisMachine() throws {
+    @Test func expandsHomeRelativeFolderTilesForThisMachine() {
         let locator = StubApplicationLocator(existingPaths: ["/Users/bob/Downloads"])
         let outcome = resolver(locator)
             .resolve(DockTile(kind: .folder, path: "~/Downloads", label: "Downloads"))
@@ -79,7 +79,7 @@ struct PresetResolverTests {
         #expect(resolver.resolve(link) == .success(link))
     }
 
-    @Test func skipsMissingTilesAndKeepsTheRest() throws {
+    @Test func skipsMissingTilesAndKeepsTheRest() {
         let locator = StubApplicationLocator(bundleIDsByPath: [slackPath: slackID])
         let preset = Preset(apps: [
             .app(path: slackPath, label: "Slack", bundleID: slackID),

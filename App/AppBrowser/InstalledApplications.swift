@@ -6,8 +6,13 @@ struct InstalledApplication: Identifiable, Hashable, Sendable {
     var name: String
     var bundleID: String?
 
-    var id: URL { url }
-    var path: String { url.path }
+    var id: URL {
+        url
+    }
+
+    var path: String {
+        url.path
+    }
 }
 
 /// Finds applications the way a person would: by looking in the Applications folders.

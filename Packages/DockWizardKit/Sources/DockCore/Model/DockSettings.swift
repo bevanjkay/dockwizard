@@ -57,5 +57,7 @@ public struct DockSettings: Codable, Sendable, Equatable, Hashable {
         case genie, scale, suck
     }
 
-    public var isEmpty: Bool { self == DockSettings() }
+    public var isEmpty: Bool {
+        self == DockSettings()
+    }
 }

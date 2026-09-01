@@ -26,8 +26,9 @@ struct Show: ParsableCommand {
             return
         }
         let loaded = try libraryOptions.library.load(preset)
-        for warning in loaded.warnings { Output.warning(warning) }
-        let data = try PresetDocument.encode(loaded.preset)
-        Output.note(String(decoding: data, as: UTF8.self))
+        for warning in loaded.warnings {
+            Output.warning(warning)
+        }
+        try Output.note(json: PresetDocument.encode(loaded.preset))
     }
 }

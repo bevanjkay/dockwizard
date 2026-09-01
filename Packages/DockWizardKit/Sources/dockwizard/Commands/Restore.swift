@@ -28,11 +28,10 @@ struct Restore: ParsableCommand {
             return
         }
 
-        let snapshot: DockBackup?
-        if let backup {
-            snapshot = try store.backup(named: backup)
+        let snapshot: DockBackup? = if let backup {
+            try store.backup(named: backup)
         } else {
-            snapshot = try store.mostRecent()
+            try store.mostRecent()
         }
         guard let snapshot else {
             throw DockBackupError.notFound(backup ?? "most recent")

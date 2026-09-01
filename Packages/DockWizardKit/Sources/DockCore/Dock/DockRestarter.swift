@@ -26,7 +26,9 @@ public struct ProcessDockRestarter: DockRestarter {
 public final class NoopDockRestarter: DockRestarter, @unchecked Sendable {
     private let lock = NSLock()
     private var count = 0
-    public var restartCount: Int { lock.withLock { count } }
+    public var restartCount: Int {
+        lock.withLock { count }
+    }
 
     public init() {}
 

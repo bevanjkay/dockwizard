@@ -15,6 +15,11 @@ enum Output {
         print(message)
     }
 
+    /// Prints UTF-8 encoded JSON produced by the core.
+    static func note(json data: Data) {
+        print(String(bytes: data, encoding: .utf8) ?? "")
+    }
+
     private static func write(_ text: String, to handle: FileHandle) {
         guard let data = text.data(using: .utf8) else { return }
         handle.write(data)
@@ -38,9 +43,15 @@ enum Output {
         var lines: [String] = []
         for section in diff.sections where !section.isEmpty {
             lines.append("\(section.section.rawValue):")
-            for tile in section.removed { lines.append("  - \(tile.displayName)") }
-            for tile in section.added { lines.append("  + \(tile.displayName)") }
-            if section.reordered { lines.append("  ~ order changes") }
+            for tile in section.removed {
+                lines.append("  - \(tile.displayName)")
+            }
+            for tile in section.added {
+                lines.append("  + \(tile.displayName)")
+            }
+            if section.reordered {
+                lines.append("  ~ order changes")
+            }
         }
         if !diff.settings.isEmpty {
             lines.append("settings:")

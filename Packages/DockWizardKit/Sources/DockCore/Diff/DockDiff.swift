@@ -35,7 +35,9 @@ public struct DockDiff: Sendable, Equatable {
             self.reordered = reordered
         }
 
-        public var isEmpty: Bool { added.isEmpty && removed.isEmpty && !reordered }
+        public var isEmpty: Bool {
+            added.isEmpty && removed.isEmpty && !reordered
+        }
     }
 
     public struct SettingChange: Sendable, Equatable {
@@ -130,11 +132,19 @@ public struct DockDiff: Sendable, Equatable {
         }
     }
 
+    /// Whole numbers read better without a trailing `.0` in a diff.
+    private static func describe(double number: Double) -> String {
+        if number == number.rounded() {
+            return String(Int(number))
+        }
+        return String(number)
+    }
+
     private static func describe(_ value: PlistValue) -> String {
         switch value {
         case let .bool(flag): flag ? "true" : "false"
         case let .int(number): String(number)
-        case let .double(number): number == number.rounded() ? String(Int(number)) : String(number)
+        case let .double(number): describe(double: number)
         case let .string(text): text
         default: "…"
         }
