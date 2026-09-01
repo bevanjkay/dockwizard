@@ -30,7 +30,7 @@ struct DockControllerTests {
         try controller(store, restarter: restarter).apply(target, options: .init(createBackup: false))
 
         let readBack = controller(store).read()
-        #expect(readBack.apps.map(\.displayName) == ["New", "— spacer —"])
+        #expect(readBack.apps.map(\.displayName) == ["New", "Spacer"])
         #expect(readBack.others.map(\.displayName) == ["tmp"])
         #expect(restarter.restartCount == 1)
     }

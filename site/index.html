@@ -1,86 +1,173 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DockWizard — presets for your macOS Dock</title>
-  <meta name="description" content="DockWizard is a free, open-source macOS Dock manager. Save your Dock as a portable JSON preset, edit it in bulk, and apply it from the GUI or the command line.">
-  <meta property="og:title" content="DockWizard">
-  <meta property="og:description" content="Save your Dock as a preset. Move it between Macs. Edit it in bulk.">
-  <meta property="og:url" content="https://bevanjkay.github.io/dockwizard/">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DockWizard - Dock presets for macOS</title>
+<meta name="description" content="DockWizard saves your macOS Dock as a portable JSON preset. Edit it in bulk in the app, apply it from the command line, move it between Macs. Free and open source.">
+<meta property="og:title" content="DockWizard">
+<meta property="og:description" content="Your Dock, saved as a file. Portable presets for macOS, with a GUI and a CLI.">
+<meta property="og:image" content="https://bevanjkay.github.io/dockwizard/screenshot-editor.png">
+<meta name="twitter:image" content="https://bevanjkay.github.io/dockwizard/screenshot-editor.png">
+<meta property="og:url" content="https://bevanjkay.github.io/dockwizard/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <header class="hero">
-      <h1>DockWizard</h1>
-      <p class="tagline">Save your Dock as a preset. Move it between Macs. Edit it in bulk.</p>
+
+<header class="nav">
+  <div class="shell nav-inner">
+    <a class="wordmark" href="/dockwizard/">DockWizard</a>
+    <nav>
+      <a href="#presets">Presets</a>
+      <a href="#cli">Command line</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/bevanjkay/dockwizard">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero shell">
+    <div class="hero-copy">
+      <h1>Your Dock,<br>saved as a file.</h1>
+      <p class="lede">Capture the Dock as portable JSON, edit it in bulk, and put it back on any Mac.</p>
       <div class="cta">
         <a class="button primary" id="download" href="https://github.com/bevanjkay/dockwizard/releases/latest">Download for macOS</a>
         <a class="button" href="https://github.com/bevanjkay/dockwizard">View on GitHub</a>
       </div>
-      <p class="meta"><span id="version">Latest release</span> · Requires macOS 26 · Signed &amp; notarised · MIT licensed</p>
-    </header>
+      <p class="meta"><span id="version">Latest release</span> for macOS 26 · signed, notarised, MIT licensed</p>
+    </div>
+    <div class="hero-shot">
+      <img src="screenshot-editor.png" width="2240" height="1440" alt="The DockWizard editor listing every Dock tile with its position, and a sidebar of saved presets" fetchpriority="high" decoding="async">
+    </div>
+  </section>
 
-    <section class="demo" aria-label="Preset preview">
-      <div class="terminal">
-        <div class="terminal-bar"><span></span><span></span><span></span></div>
-        <pre><code><span class="prompt">$</span> dockwizard export --save work
-Saved work.json
+  <section class="presets shell" id="presets">
+    <div class="presets-copy">
+      <h2>A preset is a file you can commit</h2>
+      <p>Apps are matched by bundle identifier against a verified path, so a stale copy on a mounted disk image can never win. Your home directory is written as <code>~</code>, so a preset from one Mac still finds <code>~/Downloads</code> under a different username.</p>
+      <p>Settings are optional and partial. A tiles-only preset leaves your Dock's size and position exactly as they were.</p>
+    </div>
+    <div class="code-panel">
+      <pre><code><span class="p">{</span>
+  <span class="k">"schemaVersion"</span>: <span class="n">1</span>,
+  <span class="k">"name"</span>: <span class="s">"Work"</span>,
+  <span class="k">"apps"</span>: <span class="p">[</span>
+    <span class="p">{</span> <span class="k">"type"</span>: <span class="s">"app"</span>,
+      <span class="k">"bundleId"</span>: <span class="s">"com.tinyspeck.slackmacgap"</span>,
+      <span class="k">"path"</span>: <span class="s">"/Applications/Slack.app"</span> <span class="p">}</span>,
+    <span class="p">{</span> <span class="k">"type"</span>: <span class="s">"spacer"</span> <span class="p">}</span>
+  <span class="p">]</span>,
+  <span class="k">"others"</span>: <span class="p">[</span>
+    <span class="p">{</span> <span class="k">"type"</span>: <span class="s">"folder"</span>,
+      <span class="k">"path"</span>: <span class="s">"~/Downloads"</span>,
+      <span class="k">"folder"</span>: <span class="p">{</span> <span class="k">"showAs"</span>: <span class="s">"fan"</span> <span class="p">}</span> <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span></code></pre>
+    </div>
+  </section>
 
-<span class="prompt">$</span> dockwizard apply work --dry-run
+  <section class="bento shell">
+    <article class="cell cell-wide">
+      <h3>Missing apps are reported, never guessed</h3>
+      <p>Open a colleague's preset on a Mac without Photoshop and DockWizard says so before it writes anything. The rest still applies.</p>
+      <div class="missing">
+        <div class="missing-row">Adobe Photoshop 2026<em>not installed</em></div>
+        <div class="missing-row">Linear<em>different app at that path</em></div>
+      </div>
+    </article>
+
+    <article class="cell cell-accent">
+      <h3>Every apply is reversible</h3>
+      <p>The whole Dock preference domain is snapshotted first, including keys DockWizard doesn't model.</p>
+      <p class="snippet"><code>dockwizard restore</code></p>
+    </article>
+
+    <article class="cell">
+      <h3>Bulk editing</h3>
+      <p>Select a run of apps and act on all of them at once. Nothing touches the Dock until you press Apply, so a restart costs you one flicker, not twenty.</p>
+      <ul class="ops">
+        <li>Drag as one block</li>
+        <li>Wrap in spacers</li>
+        <li>Move to position</li>
+        <li>Remove</li>
+        <li>Extract to a new preset</li>
+      </ul>
+    </article>
+
+    <article class="cell cell-shot">
+      <img src="screenshot-settings.png" width="1040" height="900" alt="DockWizard settings, showing the preset library location, the missing-apps preference, and the command line tool installer" loading="lazy" decoding="async">
+    </article>
+  </section>
+
+  <section class="cli" id="cli">
+    <div class="shell">
+      <h2>Built for a setup script</h2>
+      <p class="lede-2">The app bundles a <code>dockwizard</code> binary with exit codes worth branching on. <strong>0</strong> applied cleanly, <strong>2</strong> applied with items skipped, <strong>1</strong> failed.</p>
+      <div class="code-panel wide">
+        <pre><code><span class="c"># capture the current Dock into the preset library</span>
+<span class="pr">$</span> dockwizard export --save work
+
+<span class="c"># see what applying it would change, without writing</span>
+<span class="pr">$</span> dockwizard apply work --dry-run
 apps:
   <span class="minus">- Adobe Photoshop 2026</span>
   <span class="plus">+ Linear</span>
   <span class="tilde">~ order changes</span>
 settings:
-  <span class="tilde">~ tilesize: 48 -&gt; 64</span></code></pre>
-      </div>
-    </section>
+  <span class="tilde">~ tilesize: 48 -&gt; 64</span>
 
-    <section class="features">
-      <div>
-        <h2>Presets that travel</h2>
-        <p>Apps are matched by bundle identifier with a verified path, and <code>$HOME</code> becomes <code>~</code>, so a preset from your work Mac still finds <code>~/Downloads</code> on your laptop. Anything not installed is reported, never silently dropped.</p>
+<span class="c"># positions are 1-indexed and count spacers</span>
+<span class="pr">$</span> dockwizard add com.apple.Safari --position 3
+<span class="pr">$</span> dockwizard move 5 2</code></pre>
       </div>
-      <div>
-        <h2>Bulk editing</h2>
-        <p>Multi-select, drag a whole block to reorder, wrap a run of apps in spacers, or extract a selection into a new preset. Nothing touches the Dock until you press Apply.</p>
-      </div>
-      <div>
-        <h2>Scriptable</h2>
-        <p>The app bundles a <code>dockwizard</code> CLI with real exit codes — <code>2</code> means applied with items skipped — so a new-Mac setup script can set up your Dock and tell you what was missing.</p>
-      </div>
-      <div>
-        <h2>Always reversible</h2>
-        <p>Every apply snapshots the entire Dock preference domain first. <code>dockwizard restore</code> puts it back, including keys DockWizard doesn't even model.</p>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="install">
-      <h2>Install</h2>
-      <pre><code>brew install --cask bevanjkay/tap/dockwizard</code></pre>
-      <p>or download the DMG above and drag DockWizard to Applications. To use the command line tool, open <strong>Settings → Command Line Tool → Install</strong>.</p>
-      <p class="fineprint">DockWizard isn't on the Mac App Store and can't be: a sandboxed app is not allowed to write another application's preferences, which is the entire job.</p>
-    </section>
+  <section class="install shell" id="install">
+    <h2>Install</h2>
+    <div class="install-grid">
+      <div>
+        <pre class="install-code"><code>brew install --cask bevanjkay/tap/dockwizard</code></pre>
+        <p>Or download the DMG and drag DockWizard to Applications. The command line tool installs from Settings.</p>
+      </div>
+      <div class="note">
+        <h3>Why it isn't on the App Store</h3>
+        <p>A sandboxed app is not allowed to write another application's preferences, which is the entire job. Releases are signed with a Developer ID and notarised by Apple instead.</p>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      <p>Made by <a href="https://bevankay.me">Bevan Kay</a> · <a href="https://github.com/bevanjkay/dockwizard/issues">Report an issue</a> · <a href="https://github.com/bevanjkay/dockwizard/releases">All releases</a></p>
-    </footer>
-  </main>
-  <script>
-    fetch("https://api.github.com/repos/bevanjkay/dockwizard/releases?per_page=5")
-      .then(r => r.ok ? r.json() : [])
-      .then(releases => {
-        const release = releases.find(r => !r.draft);
-        if (!release) return;
-        const dmg = release.assets.find(a => a.name.endsWith(".dmg"));
-        if (dmg) document.getElementById("download").href = dmg.browser_download_url;
-        document.getElementById("version").textContent = release.tag_name.replace(/^v/, "") + (release.prerelease ? " (pre-release)" : "");
-      })
-      .catch(() => {});
-  </script>
+</main>
+
+<footer>
+  <div class="shell footer-inner">
+    <p>Made by <a href="https://bevankay.me">Bevan Kay</a></p>
+    <nav>
+      <a href="https://github.com/bevanjkay/dockwizard/issues">Report an issue</a>
+      <a href="https://github.com/bevanjkay/dockwizard/releases">Releases</a>
+      <a href="https://github.com/bevanjkay/dockwizard/blob/main/LICENSE">MIT</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  fetch("https://api.github.com/repos/bevanjkay/dockwizard/releases?per_page=5")
+    .then(function (r) { return r.ok ? r.json() : []; })
+    .then(function (releases) {
+      var release = releases.find(function (r) { return !r.draft; });
+      if (!release) return;
+      var dmg = release.assets.find(function (a) { return a.name.endsWith(".dmg"); });
+      if (dmg) document.getElementById("download").href = dmg.browser_download_url;
+      document.getElementById("version").textContent =
+        release.tag_name.replace(/^v/, "") + (release.prerelease ? " (pre-release)" : "");
+    })
+    .catch(function () {});
+</script>
 </body>
 </html>

@@ -27,6 +27,11 @@
 - A **flexible spacer** expands to fill all available width. Adding one makes the Dock stretch across the entire screen and look catastrophically broken while behaving exactly as designed. Do not add one to a Dock someone is using without warning them first.
 - Every apply calls `killall Dock`, which blacks the Dock out for about a second. This is why the GUI stages edits behind an explicit Apply rather than writing on every drag.
 
+## Assets
+- `make icon` rebuilds `App/Assets.xcassets/AppIcon.appiconset` and the `site/` favicons from `Design/app-icon-source.png` via `Scripts/make-appiconset.py` (needs Pillow + numpy). Replace the source artwork, not the generated PNGs.
+- The source must be a **square, full-bleed** image that already carries its own background. Unlike emoji-picker's version of this script there is no white background to cut away; the square is masked straight to a squircle on Apple's 1024/824 grid.
+- The mask is a superellipse, not a rounded rectangle. Apple's corner is continuous, and a plain rounded rectangle shows a visible break where the straight edge meets the arc at 512 pt and above.
+
 ## Releases
 - `Scripts/package.sh [version]` builds the universal CLI, embeds it in the app bundle, then archives, signs and writes DMG/zip/SHA256SUMS to `dist/`. The embedded CLI must carry the same Developer ID identity and hardened runtime as the app or notarisation rejects the bundle.
 - With `CODE_SIGN_IDENTITY="Developer ID Application"` + `DEVELOPMENT_TEAM` it signs for distribution; with `ASC_KEY_ID`/`ASC_ISSUER_ID`/`ASC_KEY_PATH` it also notarises and staples. Without them it falls back to ad-hoc.

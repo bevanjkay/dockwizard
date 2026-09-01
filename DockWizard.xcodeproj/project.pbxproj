@@ -23,6 +23,7 @@
 		B4306D790B445C0FCF3FD7A1 /* PresetCore in Frameworks */ = {isa = PBXBuildFile; productRef = FC55351BDC595717998CD040 /* PresetCore */; };
 		B4CD70D82316E5DF959C058F /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB979B64BDF3AB5A31B82BA /* Preferences.swift */; };
 		C1C768EB0BF06A6FCD1AF04B /* DockWizardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75087B72D5B2D96292D28F1 /* DockWizardApp.swift */; };
+		CC1F860C3459AA4018F105C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92D3369A8925B3FD14050B35 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		3A3F1C32C9357737B3A98C53 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4AEC8A450F60632B1AF15876 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5A63E800FEEF72C03014E553 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		92D3369A8925B3FD14050B35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A75087B72D5B2D96292D28F1 /* DockWizardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockWizardApp.swift; sourceTree = "<group>"; };
 		AEF99A249C1F0B27EB88171C /* DockWizard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DockWizard.entitlements; sourceTree = "<group>"; };
 		C04C445B1841D0FA10CE8FD4 /* MissingAppsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingAppsSheet.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		16BD6D0D21FC6C64323EA042 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				92D3369A8925B3FD14050B35 /* Assets.xcassets */,
 				AEF99A249C1F0B27EB88171C /* DockWizard.entitlements */,
 				A75087B72D5B2D96292D28F1 /* DockWizardApp.swift */,
 				4AEC8A450F60632B1AF15876 /* Info.plist */,
@@ -155,6 +158,7 @@
 			buildConfigurationList = 88FB3391D640BF25F2B15E6D /* Build configuration list for PBXNativeTarget "DockWizard" */;
 			buildPhases = (
 				4A0E2FE1CE61779EF4BA75A1 /* Sources */,
+				AF83F68376AFFE02538CED38 /* Resources */,
 				C98B4D00FABC5567B53B7293 /* Frameworks */,
 			);
 			buildRules = (
@@ -205,6 +209,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AF83F68376AFFE02538CED38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC1F860C3459AA4018F105C4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4A0E2FE1CE61779EF4BA75A1 /* Sources */ = {

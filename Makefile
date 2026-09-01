@@ -2,7 +2,7 @@ SCHEME = DockWizard
 DERIVED = build/DerivedData
 PACKAGE = Packages/DockWizardKit
 
-.PHONY: generate build test lint format clean package cli dock-snapshot dock-restore
+.PHONY: generate build test lint format clean package cli icon dock-snapshot dock-restore
 
 generate:
 	xcodegen generate
@@ -28,6 +28,10 @@ clean:
 
 package:
 	Scripts/package.sh
+
+# Rebuilds the app icon set and the site favicons from Design/app-icon-source.png.
+icon:
+	python3 Scripts/make-appiconset.py
 
 # Snapshot/restore your own Dock while developing. See Scripts/dev-dock.sh.
 dock-snapshot:

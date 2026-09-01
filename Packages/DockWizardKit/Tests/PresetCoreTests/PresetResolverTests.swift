@@ -87,7 +87,7 @@ struct PresetResolverTests {
             DockTile(kind: .spacer),
         ])
         let resolution = resolver(locator).resolve(preset)
-        #expect(resolution.state.apps.map(\.displayName) == ["Slack", "— spacer —"])
+        #expect(resolution.state.apps.map(\.displayName) == ["Slack", "Spacer"])
         #expect(resolution.missing.count == 1)
         #expect(resolution.missing.first?.index == 1)
         #expect(resolution.missing.first?.reason == .notInstalled)
