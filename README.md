@@ -27,7 +27,8 @@ bundles the `dockwizard` CLI; install it onto your `PATH` from **Settings → Co
 
 ```sh
 dockwizard export --save work        # capture the current Dock into the preset library
-dockwizard list                      # show tiles with their positions
+dockwizard list                      # show Dock tiles with their positions
+dockwizard presets                   # show presets in the library
 dockwizard diff work                 # what would change
 dockwizard apply work                # replace the Dock with the preset
 dockwizard apply work --dry-run      # same, without writing
@@ -69,7 +70,8 @@ Any command that takes a preset name also takes a path.
   ],
   "others": [
     { "type": "folder", "path": "~/Downloads", "label": "Downloads",
-      "showAs": "fan", "displayAs": "folder", "arrangement": "dateAdded", "itemSize": null },
+      "folder": { "showAs": "fan", "displayAs": "folder",
+                  "arrangement": "dateAdded", "itemSize": null } },
     { "type": "url", "url": "https://github.com", "label": "GitHub" }
   ],
   "settings": {
@@ -80,7 +82,9 @@ Any command that takes a preset name also takes a path.
 ```
 
 `apps` and `others` mirror the Dock's two lists either side of the divider. Tile types are
-`app`, `file`, `folder`, `url`, `spacer`, `smallSpacer` and `flexSpacer`.
+`app`, `file`, `folder`, `url`, `spacer`, `smallSpacer` and `flexSpacer`. Folder display
+options live in a nested `folder` object, because they only mean anything on a folder tile —
+`itemSize: null` is the Dock's "automatic".
 
 `settings` is **optional and partial**: only the keys present are written, so a tiles-only
 preset leaves your Dock's size and position alone. Unknown keys are ignored with a warning

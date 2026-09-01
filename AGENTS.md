@@ -13,6 +13,7 @@
 - Minimum macOS 26; bundle ID `me.bevankay.dockwizard`; CLI binary `dockwizard`.
 - The app is **not** sandboxed. A sandboxed process cannot write another application's preference domain, so the Mac App Store is not a distribution option.
 - Presets, backups and settings live under `~/Library/Application Support/DockWizard/`.
+- Folder display options nest under a `folder` object on the tile; they are not flat tile keys. After any schema change, check the README's JSON example still loads clean with `dockwizard show <file>` — an example with the wrong shape decodes without error and silently drops the options.
 
 ## Working with the Dock
 - **Never read or write `~/Library/Preferences/com.apple.dock.plist` directly.** `cfprefsd` caches the domain: a file read can return stale data (this bit us during development — three tiles that had been written correctly appeared to be missing), and a file write can be silently clobbered. Everything goes through `CFPreferences`, i.e. `CFPreferencesStore`.

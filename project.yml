@@ -36,6 +36,8 @@ targets:
         CFBundleName: DockWizard
         CFBundleDisplayName: DockWizard
         CFBundleIdentifier: me.bevankay.dockwizard
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         LSMinimumSystemVersion: "26.0"
         NSHumanReadableCopyright: "MIT License"
     entitlements:

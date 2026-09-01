@@ -57,8 +57,6 @@ struct MissingAppsSheet: View {
                     .help("Skipped items are still reported after applying. You can turn this back on in Settings.")
 
                 HStack {
-                    Button("Back Up First…") { editor.restoreMostRecentBackup() }
-                        .hidden()
                     Spacer()
                     Button("Cancel") { dismiss() }
                         .keyboardShortcut(.cancelAction)

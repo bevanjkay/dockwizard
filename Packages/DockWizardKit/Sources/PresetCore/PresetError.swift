@@ -25,7 +25,7 @@ public enum PresetError: Error, Equatable, LocalizedError {
         case let .decodingFailed(source, underlying):
             "Could not read \(source): \(underlying)"
         case let .presetNotFound(name):
-            "No preset named '\(name)'. Run 'dockwizard list' to see what is available."
+            "No preset named '\(name)'. Run 'dockwizard presets' to see what is available."
         case let .ambiguousName(name):
             "More than one preset matches '\(name)'."
         }

@@ -12,6 +12,7 @@ struct DockWizardCLI: ParsableCommand {
             Export.self,
             Apply.self,
             List.self,
+            Presets.self,
             Show.self,
             Diff.self,
             Add.self,

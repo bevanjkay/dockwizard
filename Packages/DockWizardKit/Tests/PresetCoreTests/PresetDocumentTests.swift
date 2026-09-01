@@ -92,6 +92,36 @@ struct PresetDocumentTests {
         #expect(!json.contains("settings"))
     }
 
+    /// Folder options are nested under `folder`, not flattened onto the tile. The README
+    /// documented the flat shape once; copying it silently dropped every folder option.
+    @Test func folderOptionsAreNestedUnderFolder() throws {
+        let preset = Preset(others: [DockTile(
+            kind: .folder,
+            path: "~/Downloads",
+            label: "Downloads",
+            folder: FolderOptions(showAs: .fan, displayAs: .folder, arrangement: .dateAdded)
+        )])
+        let json = try text(PresetDocument.encode(preset))
+        #expect(json.contains("\"folder\" : {"))
+
+        let reloaded = try PresetDocument.load(data: PresetDocument.encode(preset))
+        #expect(reloaded.preset.others.first?.folder?.showAs == .fan)
+        #expect(reloaded.warnings.isEmpty)
+    }
+
+    /// The flat shape is not silently accepted: the options are dropped and reported.
+    @Test func flatFolderOptionsAreReportedAsUnknownKeys() throws {
+        let result = try PresetDocument.load(data: data("""
+        {
+          "schemaVersion": 1,
+          "apps": [],
+          "others": [{ "type": "folder", "path": "~/Downloads", "showAs": "fan" }]
+        }
+        """))
+        #expect(result.preset.others.first?.folder == nil)
+        #expect(result.warnings.contains { $0.contains("showAs") })
+    }
+
     @Test func usesTheDocumentedJSONKeyNames() throws {
         let preset = Preset(
             name: "Work",
